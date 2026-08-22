@@ -10,9 +10,8 @@ export const her = {
   date: "02 . 10 . 2026",
   introLine: "Something was built for you.\nIt takes about four minutes.",
   introPhoto: "/photos/Intro.jpeg", // e.g. "/photos/intro.webp"
-  // International format, no + and no spaces.
-  whatsappNumber: "923001234567",
-  whatsappMessage: "okay I saw the whole thing",
+  
+    instagram: "amoiz5159",
 };
 
 // ── 1. Diagnostics ────────────────────────────────────────────

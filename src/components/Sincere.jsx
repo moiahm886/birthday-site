@@ -1,7 +1,7 @@
 import { her, sincere } from "../content";
 
 export default function Sincere() {
-  const link = `https://wa.me/${her.whatsappNumber}?text=${encodeURIComponent(her.whatsappMessage)}`;
+  const link = `https://ig.me/m/${her.instagram}`;
 
   return (
     <>
