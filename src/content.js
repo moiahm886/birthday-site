@@ -160,7 +160,7 @@ export const sincere = {
   signature: "— Moiz",
   photo: null, // optional, one photo only
   replyLabel: "Say something back",
-  footer: "phir we never talked again",
+  footer: "phir we never talked again (Dont worry wont happen with you)",
 };
 
 // ── Section order and nav labels ──────────────────────────────
