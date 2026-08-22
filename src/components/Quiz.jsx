@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { quiz, quizResults } from "../content";
 
-export default function Quiz({ setCanAdvance }) {
+export default function Quiz({ setCanAdvance, onNext }) {
   const [n, setN] = useState(0);
   const [picked, setPicked] = useState(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
-  // Locked until she answers; unlocked once the result is up.
   useEffect(() => {
-    setCanAdvance(done);
+    if (setCanAdvance) setCanAdvance(done);
   }, [done, setCanAdvance]);
 
-    const choose = (i) => setPicked(i);
+  const choose = (i) => setPicked(i);
 
   const advance = () => {
-    if (picked === quiz[n].answer) setScore((s) => s + 1);
+    const correct = picked === quiz[n].answer;
+    if (correct) setScore((s) => s + 1);
     if (n + 1 < quiz.length) {
       setN(n + 1);
       setPicked(null);
@@ -25,13 +25,14 @@ export default function Quiz({ setCanAdvance }) {
   };
 
   if (done) {
-    const result = [...quizResults].reverse().find((r) => score >= r.min);
+    const sorted = [...quizResults].sort((a, b) => b.min - a.min);
+    const result = sorted.find((r) => score >= r.min) || sorted[sorted.length - 1] || {};
     return (
       <div className="result">
         <div className="rs">{score} / {quiz.length}</div>
-        <div className="rt">{result.title}</div>
-        <div className="rb">{result.body}</div>
-                <button className="reply" style={{ marginTop: 22 }} onClick={onNext}>
+        <div className="rt">{result.title || ""}</div>
+        <div className="rb">{result.body || ""}</div>
+        <button className="reply" style={{ marginTop: 22 }} onClick={() => onNext && onNext()}>
           One last thing →
         </button>
       </div>
