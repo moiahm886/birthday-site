@@ -21,11 +21,21 @@ export default function Soundtrack() {
     };
   }, []);
 
-  const toggle = () => {
+   const toggle = async () => {
     const a = audio.current;
     if (!a) return;
-    if (playing) { a.pause(); setPlaying(false); }
-    else { a.play(); setPlaying(true); }
+    if (playing) {
+      a.pause();
+      setPlaying(false);
+      return;
+    }
+    try {
+      await a.play();
+      setPlaying(true);
+    } catch (err) {
+      console.error("audio failed:", err);
+      setPlaying(false);
+    }
   };
 
   return (
