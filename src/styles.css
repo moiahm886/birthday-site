@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+:root{
+  --ink:#0E1428;
+  --surface:#1A2138;
+  --surface2:#232B45;
+  --amber:#E9A23B;
+  --paper:#EFE7DC;
+  --slate:#8A93AD;
+  --line:rgba(239,231,220,.10);
+  --display:"Fraunces",Georgia,serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body,#root{height:100%;}
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  overscroll-behavior:none;
+}
+
+/* ── shell ─────────────────────────────────────── */
+.app{
+  height:100dvh;max-width:520px;margin:0 auto;
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+}
+.screen{
+  flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:26px 22px 8px;display:flex;flex-direction:column;
+}
+.screen::-webkit-scrollbar{display:none;}
+
+/* ── progress ──────────────────────────────────── */
+.prog{display:flex;gap:5px;padding:18px 22px 0;flex:none;}
+.prog i{height:2px;flex:1;background:rgba(239,231,220,.14);border-radius:2px;
+  transition:background .45s ease;}
+.prog i.on{background:var(--amber);}
+
+/* ── nav ───────────────────────────────────────── */
+.nav{padding:14px 22px 26px;flex:none;}
+.next{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;background:var(--amber);color:#161009;border:none;border-radius:14px;
+  padding:15px 18px;font-family:var(--body);font-size:15px;font-weight:500;
+  cursor:pointer;text-align:left;transition:opacity .2s ease,transform .12s ease;
+}
+.next:active{transform:scale(.985);}
+.next[disabled]{background:var(--surface);color:var(--slate);cursor:default;}
+.next small{
+  display:block;font-family:var(--mono);font-size:10px;opacity:.62;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;font-weight:400;
+}
+.next .arrow{font-size:20px;line-height:1;}
+.back{
+  background:none;border:1px solid var(--line);cursor:pointer;
+  font-family:var(--mono);font-size:11px;color:var(--paper);
+  letter-spacing:.08em;margin-bottom:18px;align-self:flex-start;
+  padding:7px 12px;border-radius:9px;opacity:.7;
+}
+.reply{
+  display:block;width:100%;text-align:center;border:1px solid var(--amber);
+  color:var(--amber);border-radius:14px;padding:14px;font-size:14px;
+  background:none;text-decoration:none;font-family:var(--body);cursor:pointer;
+}
+.foot{
+  font-family:var(--mono);font-size:9.5px;color:rgba(239,231,220,.18);
+  text-align:center;margin-top:14px;letter-spacing:.06em;
+}
+
+/* ── shared type roles ─────────────────────────── */
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+h2{font-family:var(--display);font-weight:400;font-size:30px;
+  line-height:1.08;letter-spacing:-.015em;margin-bottom:20px;}
+
+/* ── 1. intro ──────────────────────────────────── */
+.intro{justify-content:center;align-items:center;text-align:center;
+  position:relative;padding-bottom:40px;}
+.intro .name{
+  font-family:var(--display);
+  font-size:clamp(48px, 14vw, 76px);
+  font-weight:300;line-height:1;letter-spacing:-.03em;white-space:pre-line;
+}
+.intro .date{
+  font-family:var(--mono);font-size:12px;letter-spacing:.28em;
+  color:var(--amber);margin-top:22px;text-transform:uppercase;
+}
+.intro .sub{
+  font-size:15px;color:var(--slate);margin-top:30px;
+  line-height:1.7;white-space:pre-line;
+}
+.intro .bg{
+  position:absolute;inset:-26px -22px;object-fit:cover;width:calc(100% + 44px);
+  height:calc(100% + 34px);opacity:.22;filter:grayscale(.3);z-index:-1;
+  opacity:.25;
+}
+
+/* ── 2. diagnostics ────────────────────────────── */
+.term{font-family:var(--mono);font-size:11px;line-height:2.05;}
+.term .cmd{color:var(--amber);margin-bottom:12px;}
+.row{display:flex;color:rgba(239,231,220,.82);animation:fade .25s ease both;}
+.row .k{white-space:nowrap;}
+.row .dots{flex:1;overflow:hidden;color:rgba(239,231,220,.2);margin:0 5px;
+  white-space:nowrap;}
+.row .v{white-space:nowrap;color:var(--paper);}
+.row.warn,.row.warn .v{color:var(--amber);}
+.term .score{margin-top:14px;color:var(--paper);animation:fade .3s ease both;}
+.cursor{display:inline-block;width:7px;height:12px;background:var(--amber);
+  vertical-align:-1px;animation:blink 1s steps(1) infinite;}
+.skip{position:absolute;top:22px;right:22px;background:none;border:none;
+  font-family:var(--mono);font-size:10px;color:rgba(239,231,220,.28);
+  letter-spacing:.1em;cursor:pointer;z-index:5;}
+@keyframes blink{50%{opacity:0}}
+@keyframes fade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* ── 3. archive ────────────────────────────────── */
+.tl{position:relative;padding-left:22px;}
+.tl:before{content:"";position:absolute;left:4px;top:6px;bottom:14px;width:1px;
+  background:var(--line);}
+.ev{position:relative;margin-bottom:26px;}
+.ev:before{content:"";position:absolute;left:-22px;top:5px;width:9px;height:9px;
+  border-radius:50%;background:var(--ink);border:1px solid var(--amber);}
+.ev img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;
+  margin-bottom:11px;background:var(--surface);}
+.ev .d{font-family:var(--mono);font-size:10px;color:var(--amber);letter-spacing:.1em;}
+.ev .t{font-family:var(--display);font-size:18px;font-weight:400;margin:3px 0 5px;}
+.ev .p{font-size:13px;line-height:1.55;color:rgba(239,231,220,.62);}
+
+/* ── 4. soundtrack ─────────────────────────────── */
+.song{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:14px 15px;margin-bottom:11px;}
+.song .n{display:flex;align-items:baseline;gap:8px;}
+.song .num{font-family:var(--mono);font-size:10px;color:var(--slate);}
+.song .ti{font-family:var(--display);font-size:17px;font-weight:400;}
+.song .why{font-size:12.5px;line-height:1.55;color:rgba(239,231,220,.66);margin-top:6px;}
+.song.mine{border-color:rgba(233,162,59,.42);background:var(--surface2);}
+.player{display:flex;align-items:center;gap:11px;margin-top:12px;}
+.play{width:34px;height:34px;border-radius:50%;background:var(--amber);
+  color:#161009;display:grid;place-items:center;font-size:12px;flex:none;
+  border:none;cursor:pointer;}
+.wave{flex:1;height:20px;display:flex;align-items:center;gap:2px;}
+.wave i{flex:1;background:rgba(233,162,59,.28);border-radius:1px;transition:background .2s;}
+.wave i.lit{background:var(--amber);}
+.playlist{display:block;text-align:center;font-family:var(--mono);font-size:11px;
+  color:var(--slate);margin-top:8px;letter-spacing:.06em;}
+
+/* ── 5. awards ─────────────────────────────────── */
+.cert{border:1px solid var(--line);border-radius:12px;padding:13px 14px;
+  margin-bottom:10px;background:var(--surface);}
+.cert .tr{font-size:15px;}
+.cert .tt{font-family:var(--display);font-size:16px;line-height:1.25;margin-top:4px;}
+.cert .ct{font-family:var(--mono);font-size:10px;color:var(--slate);margin-top:5px;
+  letter-spacing:.04em;}
+
+/* ── 6. quiz ───────────────────────────────────── */
+.qmeta{font-family:var(--mono);font-size:10px;color:var(--slate);
+  letter-spacing:.14em;margin-bottom:16px;text-transform:uppercase;}
+.q{font-family:var(--display);font-size:24px;line-height:1.2;margin-bottom:22px;}
+.opt{border:1px solid var(--line);border-radius:12px;padding:13px 15px;
+  margin-bottom:9px;font-size:14px;display:flex;gap:11px;align-items:center;
+  background:none;color:var(--paper);width:100%;text-align:left;
+  font-family:var(--body);cursor:pointer;}
+.opt b{font-family:var(--mono);font-size:11px;color:var(--amber);font-weight:400;}
+.opt.sel{border-color:var(--amber);background:rgba(233,162,59,.09);}
+.result{text-align:center;margin:auto 0;}
+.result .rt{font-family:var(--display);font-size:30px;margin-bottom:12px;}
+.result .rb{font-size:14px;line-height:1.6;color:rgba(239,231,220,.7);}
+.result .rs{font-family:var(--mono);font-size:11px;color:var(--amber);
+  letter-spacing:.14em;margin-bottom:18px;}
+
+/* ── 7. sincere ────────────────────────────────── */
+.sinc{justify-content:center;padding-bottom:20px;}
+.sinc p{font-family:var(--display);font-weight:300;font-size:19px;line-height:1.55;
+  color:var(--paper);margin-bottom:17px;letter-spacing:-.005em;}
+.sinc img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;margin-top:8px;}
+.sinc .sig{font-family:var(--mono);font-size:11px;color:var(--slate);
+  letter-spacing:.14em;margin-top:8px;}
+
+/* ── page transition ───────────────────────────── */
+.page{animation:enter .35s ease both;}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+}
