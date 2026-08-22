@@ -12,13 +12,10 @@ export default function Quiz({ setCanAdvance }) {
     setCanAdvance(done);
   }, [done, setCanAdvance]);
 
-  const choose = (i) => {
-    if (picked !== null) return;
-    setPicked(i);
-    if (i === quiz[n].answer) setScore((s) => s + 1);
-  };
+    const choose = (i) => setPicked(i);
 
   const advance = () => {
+    if (picked === quiz[n].answer) setScore((s) => s + 1);
     if (n + 1 < quiz.length) {
       setN(n + 1);
       setPicked(null);
@@ -34,6 +31,9 @@ export default function Quiz({ setCanAdvance }) {
         <div className="rs">{score} / {quiz.length}</div>
         <div className="rt">{result.title}</div>
         <div className="rb">{result.body}</div>
+                <button className="reply" style={{ marginTop: 22 }} onClick={onNext}>
+          One last thing →
+        </button>
       </div>
     );
   }

@@ -28,7 +28,8 @@ export default function App() {
 
   // Diagnostics locks the button until the boot finishes.
   useEffect(() => {
-    setCanAdvance(sections[i].id !== "diagnostics");
+    const id = sections[i].id;
+    setCanAdvance(id !== "diagnostics" && id !== "quiz");
   }, [i]);
 
   // Swipe as a secondary way to move. Vertical drags are ignored.
@@ -78,7 +79,7 @@ export default function App() {
         </div>
       </div>
 
-      {!last && (
+      {!last && sections[i].id !== "quiz" && (
         <div className="nav">
           <button className="next" onClick={next} disabled={!canAdvance}>
             <span>
