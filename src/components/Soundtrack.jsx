@@ -5,6 +5,16 @@ import Particles from "./Particles";
 // 30-bar waveform shape
 const BARS = [40,65,35,80,55,70,45,85,50,75,38,68,90,48,72,32,60,82,42,66,36,78,52,70,44,88,58,64,46,76];
 
+const SONG_THEMES = [
+  { icon: "🫧", accent: "#3BACD4", glow: "rgba(59,172,212,.14)",  bd: "rgba(59,172,212,.28)"  }, // CO2
+  { icon: "⛵", accent: "#2EC4B6", glow: "rgba(46,196,182,.14)",  bd: "rgba(46,196,182,.28)"  }, // Sailor Song
+  { icon: "🌙", accent: "#5B6FD4", glow: "rgba(91,111,212,.14)",  bd: "rgba(91,111,212,.28)"  }, // The Night We Met
+  { icon: "💙", accent: "#6B8FEE", glow: "rgba(107,143,238,.14)", bd: "rgba(107,143,238,.28)" }, // Bawra Mann
+  { icon: "🎤", accent: "#9B6FE0", glow: "rgba(155,111,224,.14)", bd: "rgba(155,111,224,.28)" }, // Tu Hi Haqeeqat
+  { icon: "✨", accent: "#5B8FD4", glow: "rgba(91,143,212,.14)",  bd: "rgba(91,143,212,.28)"  }, // Channa Mereya
+  { icon: "🪻", accent: "#8B7DD8", glow: "rgba(139,125,216,.14)", bd: "rgba(139,125,216,.28)" }, // Iris
+];
+
 const fmt = (s) => {
   if (!s || isNaN(s)) return "0:00";
   const m = Math.floor(s / 60);
@@ -57,15 +67,23 @@ export default function Soundtrack() {
       <div className="eyebrow">Section 03</div>
       <h2>Your Soundtrack</h2>
 
-      {songs.map((s, n) => (
-        <div className="song" key={n}>
-          <div className="n">
-            <span className="num">{String(n + 1).padStart(2, "0")}</span>
-            <span className="ti">{s.title}</span>
+      {songs.map((s, n) => {
+        const t = SONG_THEMES[n % SONG_THEMES.length];
+        return (
+          <div className="song" key={n} style={{ "--ca": t.accent, "--cg": t.glow, "--cb": t.bd }}>
+            <div className="song-row">
+              <div className="song-icon">{t.icon}</div>
+              <div className="song-info">
+                <div className="n">
+                  <span className="num">{String(n + 1).padStart(2, "0")}</span>
+                  <span className="ti">{s.title}</span>
+                </div>
+                <div className="why">{s.why}</div>
+              </div>
+            </div>
           </div>
-          <div className="why">{s.why}</div>
-        </div>
-      ))}
+        );
+      })}
 
       {myTrack.src && (
         <div className="song mine">
