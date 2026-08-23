@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import { songs, myTrack, playlistUrl } from "../content";
 import Particles from "./Particles";
 
+// 30-bar waveform shape
+const BARS = [40,65,35,80,55,70,45,85,50,75,38,68,90,48,72,32,60,82,42,66,36,78,52,70,44,88,58,64,46,76];
+
 const fmt = (s) => {
   if (!s || isNaN(s)) return "0:00";
   const m = Math.floor(s / 60);
@@ -66,32 +69,58 @@ export default function Soundtrack() {
 
       {myTrack.src && (
         <div className="song mine">
-          <div className="n">
+          {/* Header */}
+          <div className="mine-label">♪ recorded for you</div>
+          <div className="mine-title">
             <span className="num">{String(songs.length + 1).padStart(2, "0")}</span>
             <span className="ti">{myTrack.title}</span>
           </div>
           <div className="why">{myTrack.why}</div>
-          <div className="player">
-            <button className="play-btn" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
-              {playing ? "❚❚" : "▶"}
-            </button>
-            <div className="track">
-              <div className="track-slider">
-                <div className="track-rail" />
-                <div className="track-fill" style={{ width: `${pct * 100}%` }} />
-                <div className="track-thumb" style={{ left: `${pct * 100}%` }} />
-                <input
-                  type="range" min="0" max="1" step="0.001"
-                  value={pct} onChange={seek}
-                  className="track-input" aria-label="Seek"
-                />
-              </div>
-              <div className="track-times">
-                <span>{fmt(currentTime)}</span>
-                <span>{fmt(duration)}</span>
-              </div>
+
+          {/* Animated waveform */}
+          <div className="waveform" aria-hidden="true">
+            {BARS.map((h, n) => (
+              <span
+                key={n}
+                className={`wv-bar${playing ? " playing" : ""}${n / BARS.length < pct ? " lit" : ""}`}
+                style={{
+                  height: `${h}%`,
+                  animationDelay:    `${(n * 47) % 800}ms`,
+                  animationDuration: `${550 + (n % 7) * 80}ms`,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Seekable progress */}
+          <div className="mine-seek">
+            <div className="track-slider">
+              <div className="track-rail" />
+              <div className="track-fill" style={{ width: `${pct * 100}%` }} />
+              <div className="track-thumb" style={{ left: `${pct * 100}%` }} />
+              <input
+                type="range" min="0" max="1" step="0.001"
+                value={pct} onChange={seek}
+                className="track-input" aria-label="Seek"
+              />
+            </div>
+            <div className="track-times">
+              <span>{fmt(currentTime)}</span>
+              <span>{fmt(duration)}</span>
             </div>
           </div>
+
+          {/* Large centered play button */}
+          <div className="mine-controls">
+            <button
+              className={`play-lg${playing ? " is-playing" : ""}`}
+              onClick={toggle}
+              aria-label={playing ? "Pause" : "Play"}
+            >
+              {playing ? "❚❚" : "▶"}
+            </button>
+          </div>
+
           <audio ref={audio} src={myTrack.src} preload="metadata" />
         </div>
       )}
