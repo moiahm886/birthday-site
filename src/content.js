@@ -146,8 +146,8 @@ export const quiz = [
 // Checked from the bottom up, so highest min that fits wins.
 export const quizResults = [
   { min: 0, title: "Suspicious", body: "You got almost none of these. We need to talk." },
-  { min: 3, title: "Acceptable", body: "Passable. Not great. We'll work on it." },
-  { min: 5, title: "Certified CopyCat 🐈", body: "Perfect score. Obviously. 94% similarity confirmed." },
+  { min: 2, title: "Acceptable", body: "Passable. Not great. We'll work on it." },
+  { min: 4, title: "Certified CopyCat 🐈", body: "Perfect score. Obviously. 94% similarity confirmed." },
 ];
 
 // ── 6. The last one ───────────────────────────────────────────
