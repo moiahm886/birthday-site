@@ -73,7 +73,7 @@ export default function App() {
       <div className="screen" ref={screenRef} key={i}>
         <div className="page" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
           {i > 0  && (
-            <button className="back" onClick={back}>← back</button>
+            <button className="back" onClick={back}>← Back</button>
           )}
           {view()}
         </div>
@@ -83,8 +83,8 @@ export default function App() {
         <div className="nav">
           <button className="next" onClick={next} disabled={!canAdvance}>
             <span>
-              <small>{canAdvance ? (i === 0 ? "Start" : "Next") : "Running"}</small>
-              {canAdvance ? (i === 0 ? "Run diagnostics" : nextLabel) : "Please wait"}
+              <small>{canAdvance ? (i === 0 ? "Ready?" : "Up next") : "One moment"}</small>
+              {canAdvance ? (i === 0 ? "Open your gift" : nextLabel) : "Loading…"}
             </span>
             <span className="arrow">{canAdvance ? "→" : "·"}</span>
           </button>

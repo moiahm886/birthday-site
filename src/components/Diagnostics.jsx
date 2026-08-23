@@ -17,7 +17,7 @@ export default function Diagnostics({ onDone }) {
     onDone();
   };
 
-      useEffect(() => {
+  useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) { finish(); return; }
 
@@ -35,38 +35,52 @@ export default function Diagnostics({ onDone }) {
     return () => { timers.current.forEach(clearTimeout); timers.current = []; };
   }, []);
 
-  // keep the newest line in view on short screens
   useEffect(() => {
     endRef.current?.scrollIntoView({ block: "end", behavior: "smooth" });
   }, [shown, scored]);
 
   return (
     <>
-      {!scored && <button className="skip" onClick={finish}>skip</button>}
-      <div className="term">
-        <div className="cmd">{d.command}</div>
-
-        {d.lines.slice(0, shown).map((l, n) => (
-          <div className={`row${l.warn ? " warn" : ""}`} key={n}>
-            <span className="k">{l.warn ? "⚠" : "✓"} {l.label}</span>
-            <span className="dots">{DOTS}</span>
-            <span className="v">{l.value}</span>
-          </div>
-        ))}
-
-        {scored ? (
-          <div className="score">
-            <div>{d.score}</div>
-            <div className="row" style={{ marginTop: 4, opacity: .75 }}>
-              <span className="k">{d.footnote.label}</span>
-              <span className="dots">{DOTS}</span>
-              <span className="v">{d.footnote.value}</span>
-            </div>
-          </div>
-        ) : (
-          <div style={{ marginTop: 6 }}><span className="cursor" /></div>
+      <div className="diag-header">
+        <span className="eyebrow" style={{ marginBottom: 0 }}>System Check</span>
+        {!scored && (
+          <button className="skip-btn" onClick={finish}>skip →</button>
         )}
       </div>
+
+      <div className="term-window">
+        <div className="term-chrome">
+          <span className="term-dot" />
+          <span className="term-dot" />
+          <span className="term-dot" />
+          <span className="term-win-title">random_gril_scan.exe</span>
+        </div>
+        <div className="term">
+          <div className="cmd">{d.command}</div>
+          {d.lines.slice(0, shown).map((l, n) => (
+            <div className={`row${l.warn ? " warn" : ""}`} key={n}>
+              <span className="k">{l.warn ? "⚠" : "✓"} {l.label}</span>
+              <span className="dots">{DOTS}</span>
+              <span className="v">{l.value}</span>
+            </div>
+          ))}
+          {!scored && (
+            <div style={{ marginTop: 6 }}><span className="cursor" /></div>
+          )}
+        </div>
+      </div>
+
+      {scored && (
+        <div className="scan-result">
+          <div className="scan-main">{d.score}</div>
+          <div className="scan-foot">
+            <span className="scan-k">{d.footnote.label}</span>
+            <span className="scan-v"> — {d.footnote.value}</span>
+          </div>
+        </div>
+      )}
+
+      <div ref={endRef} />
     </>
   );
 }

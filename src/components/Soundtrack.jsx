@@ -1,41 +1,53 @@
 import { useState, useRef, useEffect } from "react";
 import { songs, myTrack, playlistUrl } from "../content";
 
-const BARS = [30,62,44,88,52,74,36,66,96,48,70,34,58,80,42,64,28,54,76,40];
+const fmt = (s) => {
+  if (!s || isNaN(s)) return "0:00";
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return `${m}:${sec.toString().padStart(2, "0")}`;
+};
 
 export default function Soundtrack() {
-  const [playing, setPlaying] = useState(false);
-  const [pct, setPct] = useState(0);
+  const [playing, setPlaying]     = useState(false);
+  const [pct, setPct]             = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration]   = useState(0);
   const audio = useRef(null);
 
   useEffect(() => {
     const a = audio.current;
     if (!a) return;
-    const onTime = () => setPct(a.duration ? a.currentTime / a.duration : 0);
-    const onEnd = () => { setPlaying(false); setPct(0); };
-    a.addEventListener("timeupdate", onTime);
-    a.addEventListener("ended", onEnd);
+    const onTime = () => {
+      setCurrentTime(a.currentTime);
+      setPct(a.duration ? a.currentTime / a.duration : 0);
+    };
+    const onMeta = () => setDuration(a.duration);
+    const onEnd  = () => { setPlaying(false); setPct(0); setCurrentTime(0); };
+    a.addEventListener("timeupdate",     onTime);
+    a.addEventListener("loadedmetadata", onMeta);
+    a.addEventListener("ended",          onEnd);
     return () => {
-      a.removeEventListener("timeupdate", onTime);
-      a.removeEventListener("ended", onEnd);
+      a.removeEventListener("timeupdate",     onTime);
+      a.removeEventListener("loadedmetadata", onMeta);
+      a.removeEventListener("ended",          onEnd);
     };
   }, []);
 
-   const toggle = async () => {
+  const toggle = async () => {
     const a = audio.current;
     if (!a) return;
-    if (playing) {
-      a.pause();
-      setPlaying(false);
-      return;
-    }
-    try {
-      await a.play();
-      setPlaying(true);
-    } catch (err) {
-      console.error("audio failed:", err);
-      setPlaying(false);
-    }
+    if (playing) { a.pause(); setPlaying(false); return; }
+    try { await a.play(); setPlaying(true); }
+    catch (err) { console.error("audio failed:", err); }
+  };
+
+  const seek = (e) => {
+    const a = audio.current;
+    if (!a || !a.duration) return;
+    const val = parseFloat(e.target.value);
+    a.currentTime = val * a.duration;
+    setPct(val);
   };
 
   return (
@@ -60,16 +72,33 @@ export default function Soundtrack() {
             <span className="ti">{myTrack.title}</span>
           </div>
           <div className="why">{myTrack.why}</div>
+
           <div className="player">
-            <button className="play" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
+            <button className="play-btn" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>
               {playing ? "❚❚" : "▶"}
             </button>
-            <div className="wave">
-              {BARS.map((h, n) => (
-                <i key={n} className={n / BARS.length < pct ? "lit" : ""} style={{ height: `${h}%` }} />
-              ))}
+
+            <div className="track">
+              <div className="track-slider">
+                <div className="track-rail" />
+                <div className="track-fill" style={{ width: `${pct * 100}%` }} />
+                <div className="track-thumb" style={{ left: `${pct * 100}%` }} />
+                <input
+                  type="range"
+                  min="0" max="1" step="0.001"
+                  value={pct}
+                  onChange={seek}
+                  className="track-input"
+                  aria-label="Seek"
+                />
+              </div>
+              <div className="track-times">
+                <span>{fmt(currentTime)}</span>
+                <span>{fmt(duration)}</span>
+              </div>
             </div>
           </div>
+
           <audio ref={audio} src={myTrack.src} preload="metadata" />
         </div>
       )}
