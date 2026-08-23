@@ -1,7 +1,11 @@
+import { useEffect } from "react";
 import { her } from "../content";
+import { startRain } from "../confetti";
 
 export default function Intro() {
   const hasPhoto = Boolean(her.introPhoto);
+
+  useEffect(() => startRain(), []);
 
   return (
     <div className={`intro${hasPhoto ? " has-photo" : ""}`} style={{ flex: 1 }}>

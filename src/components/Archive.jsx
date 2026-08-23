@@ -1,8 +1,10 @@
 import { archive } from "../content";
+import Particles from "./Particles";
 
 export default function Archive() {
   return (
     <>
+      <Particles type="bokeh" count={18} />
       <div className="eyebrow">Section 02</div>
       <h2>The Archive</h2>
       <div className="tl">

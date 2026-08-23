@@ -507,6 +507,28 @@ h2 {
   letter-spacing: .14em; margin-top: 10px;
 }
 
+/* ── floating particles ─────────────────────────────── */
+.particles {
+  position: fixed; inset: 0;
+  pointer-events: none; overflow: hidden; z-index: 20;
+}
+.particle {
+  position: absolute; user-select: none; line-height: 1;
+  will-change: transform, opacity;
+}
+.particle--down { top: -1.5em; animation: p-down linear infinite; }
+.particle--up   { bottom: -1.5em; animation: p-up linear infinite; }
+
+@keyframes p-down {
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(110dvh) rotate(540deg); }
+}
+@keyframes p-up {
+  0%  { transform: translateY(0); opacity: inherit; }
+  75% { opacity: inherit; }
+  to  { transform: translateY(-110dvh) rotate(-15deg); opacity: 0; }
+}
+
 /* ── transitions ────────────────────────────────────── */
 .page { animation: enter .38s cubic-bezier(.25,.8,.25,1) both; }
 @keyframes enter {

@@ -1,26 +1,29 @@
 import { useState, useEffect } from "react";
 import { quiz, quizResults } from "../content";
+import { fireworks, quizBurst } from "../confetti";
 
 export default function Quiz({ setCanAdvance, onNext }) {
-  const [n, setN] = useState(0);
+  const [n, setN]           = useState(0);
   const [picked, setPicked] = useState(null);
-  const [score, setScore] = useState(0);
-  const [done, setDone] = useState(false);
+  const [score, setScore]   = useState(0);
+  const [done, setDone]     = useState(false);
 
-  useEffect(() => {
-    if (setCanAdvance) setCanAdvance(done);
-  }, [done, setCanAdvance]);
+  useEffect(() => { if (setCanAdvance) setCanAdvance(done); }, [done, setCanAdvance]);
 
   const choose = (i) => setPicked(i);
 
   const advance = () => {
     const correct = picked === quiz[n].answer;
-    if (correct) setScore((s) => s + 1);
+    const newScore = score + (correct ? 1 : 0);
+    if (correct) setScore(newScore);
+
     if (n + 1 < quiz.length) {
       setN(n + 1);
       setPicked(null);
     } else {
       setDone(true);
+      if (newScore >= quiz.length) fireworks();
+      else quizBurst();
     }
   };
 
