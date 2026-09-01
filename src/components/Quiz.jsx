@@ -30,8 +30,9 @@ export default function Quiz({ setCanAdvance, onNext }) {
   if (done) {
     const sorted = [...quizResults].sort((a, b) => b.min - a.min);
     const result = sorted.find((r) => score >= r.min) || sorted[sorted.length - 1] || {};
+    const perfect = score >= quiz.length;
     return (
-      <div className="result">
+      <div className={`result${perfect ? " gold" : ""}`}>
         <div className="rs">{score} / {quiz.length}</div>
         <div className="rt">{result.title || ""}</div>
         <div className="rb">{result.body || ""}</div>

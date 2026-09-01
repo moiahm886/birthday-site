@@ -120,6 +120,12 @@ body {
   transition: background .2s;
 }
 .reply:active { background: rgba(64,128,220,.18); }
+.reply.gold {
+  border-color: rgba(255,209,102,.55);
+  color: #FFE29A;
+  background: rgba(255,209,102,.1);
+}
+.reply.gold:active { background: rgba(255,209,102,.2); }
 
 .foot {
   font-family: var(--mono); font-size: 10px;
@@ -272,6 +278,8 @@ h2 {
 }
 .row .v { white-space: nowrap; color: var(--text); }
 .row.warn, .row.warn .v { color: var(--soft); }
+.row.win .k { color: #FFD166; }
+.row.win .v { color: #FFE29A; font-weight: 500; }
 
 /* Blinking cursor */
 .cursor {
@@ -284,8 +292,8 @@ h2 {
 /* Result card that appears after scan completes */
 .scan-result {
   margin-top: 14px; padding: 18px 20px;
-  background: linear-gradient(135deg, rgba(64,128,220,.14) 0%, rgba(64,128,220,.05) 100%);
-  border: 1px solid var(--border-acc);
+  background: linear-gradient(135deg, rgba(255,209,102,.14) 0%, rgba(64,128,220,.06) 100%);
+  border: 1px solid rgba(255,209,102,.32);
   border-radius: 14px; animation: fade .45s .05s ease both;
 }
 .scan-main {
@@ -324,6 +332,23 @@ h2 {
 .ev .d { font-family: var(--mono); font-size: 10px; color: var(--accent-hi); letter-spacing: .12em; opacity: .75; }
 .ev .t { font-family: var(--display); font-size: 18px; font-weight: 400; margin: 4px 0 6px; }
 .ev .p { font-size: 14px; line-height: 1.65; color: rgba(237,241,255,.58); }
+
+/* Final entry — today */
+.ev-today:before {
+  border-color: #FFD166;
+  box-shadow: 0 0 12px rgba(255,209,102,.6);
+  animation: today-pulse 2s ease-in-out infinite;
+}
+.ev-today .d { color: #FFD166; opacity: 1; }
+.ev-today .t {
+  background: linear-gradient(160deg, #fff 15%, #FFE29A 55%, #FF9EC4 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes today-pulse {
+  0%,100% { box-shadow: 0 0 8px rgba(255,209,102,.45); }
+  50%      { box-shadow: 0 0 16px rgba(255,209,102,.8); }
+}
 
 /* ── 4. soundtrack ──────────────────────────────────── */
 .song {
@@ -565,6 +590,13 @@ h2 {
   font-family: var(--mono); font-size: 11px; color: var(--accent-hi);
   letter-spacing: .14em; margin-bottom: 20px;
 }
+.result.gold .rs { color: #FFD166; }
+.result.gold .rt {
+  background: linear-gradient(160deg, #fff 15%, #FFE29A 55%, #FF9EC4 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 14px rgba(255,140,180,.3));
+}
 
 /* ── 7. sincere ─────────────────────────────────────── */
 .sinc { justify-content: center; padding-bottom: 20px; }
@@ -579,8 +611,8 @@ h2 {
   box-shadow: 0 10px 40px rgba(0,0,0,.4);
 }
 .sinc .sig {
-  font-family: var(--mono); font-size: 11px; color: var(--muted);
-  letter-spacing: .14em; margin-top: 10px;
+  font-family: var(--mono); font-size: 11px; color: #E8C888;
+  letter-spacing: .14em; margin-top: 10px; opacity: .85;
 }
 
 /* ── floating particles ─────────────────────────────── */

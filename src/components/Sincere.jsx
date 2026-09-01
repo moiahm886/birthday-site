@@ -14,7 +14,7 @@ export default function Sincere() {
       </div>
 
       <div style={{ paddingTop: 20 }}>
-        <a className="reply" href={link} target="_blank" rel="noreferrer">
+        <a className="reply gold" href={link} target="_blank" rel="noreferrer">
           {sincere.replyLabel}
         </a>
         <div className="foot">{sincere.footer}</div>

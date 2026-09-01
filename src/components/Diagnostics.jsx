@@ -58,8 +58,8 @@ export default function Diagnostics({ onDone }) {
         <div className="term">
           <div className="cmd">{d.command}</div>
           {d.lines.slice(0, shown).map((l, n) => (
-            <div className={`row${l.warn ? " warn" : ""}`} key={n}>
-              <span className="k">{l.warn ? "⚠" : "✓"} {l.label}</span>
+            <div className={`row${l.warn ? " warn" : ""}${l.win ? " win" : ""}`} key={n}>
+              <span className="k">{l.warn ? "⚠" : l.win ? "🎉" : "✓"} {l.label}</span>
               <span className="dots">{DOTS}</span>
               <span className="v">{l.value}</span>
             </div>

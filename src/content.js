@@ -20,8 +20,8 @@ export const diagnostics = {
   command: "> running random gril diagnostics...",
   lines: [
     { label: "personality",           value: "excellent",     delay: 1500 },
-    { label: "words per breath",      value: "847",           delay: 1500 },
-    { label: '"stupiddd" usage',      value: "1,847",         delay: 1500 },
+    { label: "words per breath",      value: "312",           delay: 1500 },
+    { label: '"stupiddd" usage',      value: "2,193",         delay: 1500 },
     { label: "lip movement",          value: "involuntary",   delay: 1500 },
     { label: "similarity to moiz",    value: "94%",           delay: 1500 },
     { label: "similarity to moiz",    value: "investigating", delay: 2500, warn: true },
@@ -29,7 +29,7 @@ export const diagnostics = {
     { label: "spanish latte",         value: "critical",      delay: 1500 },
     { label: "voice note reception",  value: "10/10",         delay: 1500 },
     { label: "main character energy", value: "detected",      delay: 1500 },
-    { label: "birthday eligibility",  value: "CONFIRMED",     delay: 1500 },
+    { label: "birthday eligibility",  value: "CONFIRMED",     delay: 1500, win: true },
   ],
   scoreDelay: 1500,
   score: "overall system health: 98.7%",
@@ -79,6 +79,7 @@ export const archive = [
     title: "You're reading this",
     body: "Happiest Birthday Grillll",
     photo: null, // keep this one bare
+    highlight: true,
   },
 ];
 
@@ -107,7 +108,7 @@ export const myTrack = {
 export const awards = [
   { title: "Lifetime Achievement in Talking Without Breathing", citation: "record: 4m 12s, no witnesses survived" },
   { title: "The Synchronised Living Award", citation: "0% copying · 100% suspicious" },
-  { title: 'Excellence in the Use of the Word "Stupiddd"', citation: "1,847 uses · 100% accuracy" },
+  { title: 'Excellence in the Use of the Word "Stupiddd"', citation: "2,193 uses · 100% accuracy" },
   { title: "Involuntary Lip Movement of the Year", citation: "ongoing · subject unaware" },
   { title: "Diplomatic Excellence", citation: "365 days · 0 arguments" },
   { title: "Random Gril of the Year", citation: "uncontested · twelve months running" },
