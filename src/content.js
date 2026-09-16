@@ -59,7 +59,7 @@ export const archive = [
   {
     date: "EVERY TIME",
     title: "The Walks",
-    body: "Where the silence was somehow louder than the talking.",
+    body: "Where the silence was somehow louder than the talking. Marte Marte bachi thi yahaan",
     photo: "/photos/Walk.jpeg",
   },
   {
