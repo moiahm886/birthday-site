@@ -173,7 +173,13 @@ h2 {
 .intro .bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center top;
-  opacity: .76; filter: saturate(.78) brightness(.9); z-index: 0;
+  z-index: 0;
+  opacity: 0;
+  animation: bg-reveal 1.6s cubic-bezier(.16,.8,.24,1) .1s both;
+}
+@keyframes bg-reveal {
+  from { opacity: 0;   filter: blur(18px) saturate(.78) brightness(.65); transform: scale(1.08); }
+  to   { opacity: .76; filter: saturate(.78) brightness(.9);             transform: scale(1); }
 }
 
 /* Multi-layer vignette: dark top/bottom + strong centre oval for text contrast */
@@ -200,11 +206,18 @@ h2 {
   border: 1px solid rgba(255,209,102,.38);
   padding: 7px 16px; border-radius: 99px;
   margin-bottom: 22px; backdrop-filter: blur(6px);
-  animation: badge-glow 2.4s ease-in-out infinite;
+  opacity: 0;
+  animation:
+    reveal-in .7s cubic-bezier(.16,.8,.24,1) .55s both,
+    badge-glow 2.4s ease-in-out 1.25s infinite;
 }
 @keyframes badge-glow {
   0%,100% { box-shadow: 0 0 10px rgba(255,209,102,.22); }
   50%      { box-shadow: 0 0 22px rgba(255,209,102,.5); }
+}
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
 }
 
 .intro .name {
@@ -215,17 +228,25 @@ h2 {
   background: linear-gradient(160deg, #fff 15%, #FFE29A 55%, #FF9EC4 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 2px 16px rgba(255,140,180,.35));
+  opacity: 0;
+  animation: name-reveal 1s cubic-bezier(.16,.8,.24,1) 1.05s both;
+}
+@keyframes name-reveal {
+  from { opacity: 0; transform: translateY(10px) scale(.94); filter: blur(10px) drop-shadow(0 2px 16px rgba(255,140,180,.35)); }
+  to   { opacity: 1; transform: none;                        filter: blur(0)    drop-shadow(0 2px 16px rgba(255,140,180,.35)); }
 }
 .intro .date {
   font-family: var(--mono); font-size: 11px; letter-spacing: .3em;
-  color: #fff; margin-top: 18px; text-transform: uppercase; opacity: .8;
+  color: #fff; margin-top: 18px; text-transform: uppercase; opacity: 0;
   text-shadow: 0 1px 8px rgba(0,0,0,.85);
+  animation: reveal-in .6s cubic-bezier(.16,.8,.24,1) 1.65s both;
 }
 .intro .sub {
   font-size: 14.5px; color: rgba(255,255,255,.85);
   text-shadow: 0 1px 8px rgba(0,0,0,.85);
   margin-top: 14px; line-height: 1.75; white-space: pre-line;
+  opacity: 0;
+  animation: reveal-in .6s cubic-bezier(.16,.8,.24,1) 1.85s both;
 }
 
 /* ── 2. diagnostics ─────────────────────────────────── */

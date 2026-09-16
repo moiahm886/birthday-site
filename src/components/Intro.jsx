@@ -1,14 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { her } from "../content";
 import { startRain, birthdayBurst, PARTY } from "../confetti";
 import Particles from "./Particles";
 
 export default function Intro() {
   const hasPhoto = Boolean(her.introPhoto);
+  const stopRain = useRef(null);
 
   useEffect(() => {
-    birthdayBurst();
-    return startRain(PARTY);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const rainDelay = reduced ? 0 : 600;
+    const burstDelay = reduced ? 0 : 1050;
+
+    const rainTimer = setTimeout(() => {
+      stopRain.current = startRain(PARTY);
+    }, rainDelay);
+    const burstTimer = setTimeout(birthdayBurst, burstDelay);
+
+    return () => {
+      clearTimeout(rainTimer);
+      clearTimeout(burstTimer);
+      stopRain.current?.();
+    };
   }, []);
 
   return (
