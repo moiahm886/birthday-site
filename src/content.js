@@ -47,7 +47,7 @@ export const archive = [
   {
     date: "FIRST VOICE NOTE",
     title: "Ae Jazba-e-Dil",
-    body: "Nayyara Noor. The first song I ever sang for you. Somehow not the last.",
+    body: "Nayyara Noor. The first song I ever sang for you. Somehow not the last. The place in the picture is exactly where I was when I recorded it.",
     photo: "/photos/Song.jpeg",
   },
   {
@@ -99,7 +99,7 @@ export const playlistUrl = ""; // e.g. "https://open.spotify.com/playlist/..."
 
 // Leave src as null until you've recorded it and the card hides itself.
 export const myTrack = {
-  title: "One more, sung by me",
+  title: "Some more, sung by me",
   why: "Recorded for you. Only here.",
   src: "/song/Birthday.m4a", // e.g. "/audio/song.m4a"
 };
