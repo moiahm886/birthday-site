@@ -9,8 +9,8 @@ export default function Intro() {
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const rainDelay = reduced ? 0 : 600;
-    const burstDelay = reduced ? 0 : 1050;
+    const rainDelay = reduced ? 0 : 1800;
+    const burstDelay = reduced ? 0 : 3150;
 
     const rainTimer = setTimeout(() => {
       stopRain.current = startRain(PARTY);
